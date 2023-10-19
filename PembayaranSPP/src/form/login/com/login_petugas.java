@@ -8,12 +8,12 @@ package form.login.com;
  *
  * @author JUNIARGO
  */
-public class login_siswa extends javax.swing.JFrame {
+public class login_petugas extends javax.swing.JFrame {
 
     /**
-     * Creates new form login_siswa
+     * Creates new form login_petugas
      */
-    public login_siswa() {
+    public login_petugas() {
         initComponents();
     }
 
@@ -44,18 +44,18 @@ public class login_siswa extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         btn_login = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        txt_username1 = new javax.swing.JTextField();
+        txt_username = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         btn_admin = new javax.swing.JButton();
-        btn_petugas = new javax.swing.JButton();
+        btn_siswa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         pnlInterface.setBackground(new java.awt.Color(153, 51, 255));
         pnlInterface.setPreferredSize(new java.awt.Dimension(430, 474));
@@ -112,7 +112,7 @@ public class login_siswa extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Login Siswa");
+        jLabel6.setText("Login Petugas");
         jLabel6.setPreferredSize(new java.awt.Dimension(134, 30));
         jPanel6.add(jLabel6, java.awt.BorderLayout.CENTER);
 
@@ -144,10 +144,10 @@ public class login_siswa extends javax.swing.JFrame {
         jSeparator2.setBackground(new java.awt.Color(153, 51, 255));
         jSeparator2.setForeground(new java.awt.Color(153, 51, 255));
 
-        txt_username1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txt_username1.setText("NISN......");
-        txt_username1.setBorder(null);
-        txt_username1.setPreferredSize(new java.awt.Dimension(66, 30));
+        txt_username.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txt_username.setText("Username");
+        txt_username.setBorder(null);
+        txt_username.setPreferredSize(new java.awt.Dimension(66, 30));
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/User.png"))); // NOI18N
@@ -167,7 +167,7 @@ public class login_siswa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator3)
-                            .addComponent(txt_username1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pwd_pasword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(62, Short.MAX_VALUE))
@@ -178,7 +178,7 @@ public class login_siswa extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(txt_username1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5))
@@ -228,17 +228,17 @@ public class login_siswa extends javax.swing.JFrame {
         });
         jPanel7.add(btn_admin);
 
-        btn_petugas.setBackground(new java.awt.Color(255, 102, 204));
-        btn_petugas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn_petugas.setForeground(new java.awt.Color(255, 255, 255));
-        btn_petugas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Customs Officer.png"))); // NOI18N
-        btn_petugas.setText("Petugas");
-        btn_petugas.addActionListener(new java.awt.event.ActionListener() {
+        btn_siswa.setBackground(new java.awt.Color(255, 102, 204));
+        btn_siswa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_siswa.setForeground(new java.awt.Color(255, 255, 255));
+        btn_siswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Graduation Cap.png"))); // NOI18N
+        btn_siswa.setText("Siswa");
+        btn_siswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_petugasActionPerformed(evt);
+                btn_siswaActionPerformed(evt);
             }
         });
-        jPanel7.add(btn_petugas);
+        jPanel7.add(btn_siswa);
 
         jPanel2.add(jPanel7);
 
@@ -250,17 +250,17 @@ public class login_siswa extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_petugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_petugasActionPerformed
-        // TODO add your handling code here:
-        new login_petugas().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btn_petugasActionPerformed
-
     private void btn_adminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_adminActionPerformed
         // TODO add your handling code here:
         new login_admin().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_adminActionPerformed
+
+    private void btn_siswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_siswaActionPerformed
+        // TODO add your handling code here:
+        new login_siswa().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_siswaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,20 +279,21 @@ public class login_siswa extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(login_siswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(login_petugas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(login_siswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(login_petugas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(login_siswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(login_petugas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(login_siswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(login_petugas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new login_siswa().setVisible(true);
+                new login_petugas().setVisible(true);
             }
         });
     }
@@ -300,7 +301,7 @@ public class login_siswa extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_admin;
     private javax.swing.JButton btn_login;
-    private javax.swing.JButton btn_petugas;
+    private javax.swing.JButton btn_siswa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -323,6 +324,6 @@ public class login_siswa extends javax.swing.JFrame {
     private javax.swing.JPanel pnlInterface;
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPasswordField pwd_pasword;
-    private javax.swing.JTextField txt_username1;
+    private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }
