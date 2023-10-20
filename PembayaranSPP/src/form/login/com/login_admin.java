@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package form.login.com;
-
+import home.dashboard.com.*;
 /**
  *
  * @author JUNIARGO
@@ -140,6 +140,11 @@ public class login_admin extends javax.swing.JFrame {
         btn_login.setText("Log in");
         btn_login.setAlignmentX(0.5F);
         btn_login.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loginActionPerformed(evt);
+            }
+        });
 
         jSeparator2.setBackground(new java.awt.Color(153, 51, 255));
         jSeparator2.setForeground(new java.awt.Color(153, 51, 255));
@@ -259,8 +264,14 @@ public class login_admin extends javax.swing.JFrame {
     private void btn_petugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_petugasActionPerformed
         // TODO add your handling code here:
         new login_petugas().setVisible(true);
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btn_petugasActionPerformed
+
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+        // TODO add your handling code here:
+        new dashboard_admin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_loginActionPerformed
 
     /**
      * @param args the command line arguments

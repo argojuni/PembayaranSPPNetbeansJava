@@ -44,7 +44,7 @@ public class login_siswa extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         btn_login = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        txt_username1 = new javax.swing.JTextField();
+        txt_username = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -126,6 +126,16 @@ public class login_siswa extends javax.swing.JFrame {
         pwd_pasword.setBorder(null);
         pwd_pasword.setMinimumSize(new java.awt.Dimension(64, 30));
         pwd_pasword.setPreferredSize(new java.awt.Dimension(106, 30));
+        pwd_pasword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pwd_paswordMouseClicked(evt);
+            }
+        });
+        pwd_pasword.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                pwd_paswordPropertyChange(evt);
+            }
+        });
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/password.png"))); // NOI18N
@@ -144,10 +154,20 @@ public class login_siswa extends javax.swing.JFrame {
         jSeparator2.setBackground(new java.awt.Color(153, 51, 255));
         jSeparator2.setForeground(new java.awt.Color(153, 51, 255));
 
-        txt_username1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txt_username1.setText("NISN......");
-        txt_username1.setBorder(null);
-        txt_username1.setPreferredSize(new java.awt.Dimension(66, 30));
+        txt_username.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txt_username.setText("NISN......");
+        txt_username.setBorder(null);
+        txt_username.setPreferredSize(new java.awt.Dimension(66, 30));
+        txt_username.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txt_usernameMouseClicked(evt);
+            }
+        });
+        txt_username.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txt_usernamePropertyChange(evt);
+            }
+        });
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/User.png"))); // NOI18N
@@ -167,7 +187,7 @@ public class login_siswa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator3)
-                            .addComponent(txt_username1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pwd_pasword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(62, Short.MAX_VALUE))
@@ -178,7 +198,7 @@ public class login_siswa extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(txt_username1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5))
@@ -262,6 +282,26 @@ public class login_siswa extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_adminActionPerformed
 
+    private void txt_usernamePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txt_usernamePropertyChange
+        // TODO add your handling code here:\
+        txt_username.selectAll();
+    }//GEN-LAST:event_txt_usernamePropertyChange
+
+    private void pwd_paswordPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_pwd_paswordPropertyChange
+        // TODO add your handling code here:
+        pwd_pasword.selectAll();
+    }//GEN-LAST:event_pwd_paswordPropertyChange
+
+    private void pwd_paswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pwd_paswordMouseClicked
+        // TODO add your handling code here:
+        pwd_pasword.selectAll();
+    }//GEN-LAST:event_pwd_paswordMouseClicked
+
+    private void txt_usernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_usernameMouseClicked
+        // TODO add your handling code here:
+        txt_username.selectAll();
+    }//GEN-LAST:event_txt_usernameMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -323,6 +363,6 @@ public class login_siswa extends javax.swing.JFrame {
     private javax.swing.JPanel pnlInterface;
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPasswordField pwd_pasword;
-    private javax.swing.JTextField txt_username1;
+    private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }

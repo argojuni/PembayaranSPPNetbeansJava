@@ -148,6 +148,11 @@ public class login_petugas extends javax.swing.JFrame {
         txt_username.setText("Username");
         txt_username.setBorder(null);
         txt_username.setPreferredSize(new java.awt.Dimension(66, 30));
+        txt_username.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txt_usernamePropertyChange(evt);
+            }
+        });
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/User.png"))); // NOI18N
@@ -261,6 +266,10 @@ public class login_petugas extends javax.swing.JFrame {
         new login_siswa().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_siswaActionPerformed
+
+    private void txt_usernamePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txt_usernamePropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_usernamePropertyChange
 
     /**
      * @param args the command line arguments
