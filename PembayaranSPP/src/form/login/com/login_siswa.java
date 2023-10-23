@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package form.login.com;
+import java.sql.*;
+import javax.swing.*;
+import pembayaranspp.KoneksiDB;
+import pembayaranspp.UserSession;
+import home.dashboard.com.Dashboard;
 
 /**
  *
@@ -10,6 +15,8 @@ package form.login.com;
  */
 public class login_siswa extends javax.swing.JFrame {
 
+    Connection con = KoneksiDB.getConnection();;
+    ResultSet rs;
     /**
      * Creates new form login_siswa
      */
@@ -39,12 +46,12 @@ public class login_siswa extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        pwd_pasword = new javax.swing.JPasswordField();
+        tNis = new javax.swing.JPasswordField();
         jLabel8 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        btn_login = new javax.swing.JButton();
+        submitSiswa = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        txt_username = new javax.swing.JTextField();
+        tNisn = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -55,7 +62,7 @@ public class login_siswa extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         pnlInterface.setBackground(new java.awt.Color(153, 51, 255));
         pnlInterface.setPreferredSize(new java.awt.Dimension(430, 474));
@@ -121,19 +128,19 @@ public class login_siswa extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 20));
 
-        pwd_pasword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        pwd_pasword.setText("jPasswordField1");
-        pwd_pasword.setBorder(null);
-        pwd_pasword.setMinimumSize(new java.awt.Dimension(64, 30));
-        pwd_pasword.setPreferredSize(new java.awt.Dimension(106, 30));
-        pwd_pasword.addMouseListener(new java.awt.event.MouseAdapter() {
+        tNis.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tNis.setText("jPasswordField1");
+        tNis.setBorder(null);
+        tNis.setMinimumSize(new java.awt.Dimension(64, 30));
+        tNis.setPreferredSize(new java.awt.Dimension(106, 30));
+        tNis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pwd_paswordMouseClicked(evt);
+                tNisMouseClicked(evt);
             }
         });
-        pwd_pasword.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        tNis.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                pwd_paswordPropertyChange(evt);
+                tNisPropertyChange(evt);
             }
         });
 
@@ -143,29 +150,34 @@ public class login_siswa extends javax.swing.JFrame {
         jSeparator3.setBackground(new java.awt.Color(153, 51, 255));
         jSeparator3.setForeground(new java.awt.Color(153, 51, 255));
 
-        btn_login.setBackground(new java.awt.Color(153, 51, 255));
-        btn_login.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btn_login.setForeground(new java.awt.Color(255, 255, 255));
-        btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Login.png"))); // NOI18N
-        btn_login.setText("Log in");
-        btn_login.setAlignmentX(0.5F);
-        btn_login.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        submitSiswa.setBackground(new java.awt.Color(153, 51, 255));
+        submitSiswa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        submitSiswa.setForeground(new java.awt.Color(255, 255, 255));
+        submitSiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Login.png"))); // NOI18N
+        submitSiswa.setText("Log in");
+        submitSiswa.setAlignmentX(0.5F);
+        submitSiswa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        submitSiswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitSiswaActionPerformed(evt);
+            }
+        });
 
         jSeparator2.setBackground(new java.awt.Color(153, 51, 255));
         jSeparator2.setForeground(new java.awt.Color(153, 51, 255));
 
-        txt_username.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txt_username.setText("NISN......");
-        txt_username.setBorder(null);
-        txt_username.setPreferredSize(new java.awt.Dimension(66, 30));
-        txt_username.addMouseListener(new java.awt.event.MouseAdapter() {
+        tNisn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tNisn.setText("NISN......");
+        tNisn.setBorder(null);
+        tNisn.setPreferredSize(new java.awt.Dimension(66, 30));
+        tNisn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txt_usernameMouseClicked(evt);
+                tNisnMouseClicked(evt);
             }
         });
-        txt_username.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        tNisn.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                txt_usernamePropertyChange(evt);
+                tNisnPropertyChange(evt);
             }
         });
 
@@ -179,7 +191,7 @@ public class login_siswa extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(submitSiswa, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel10)
@@ -187,8 +199,8 @@ public class login_siswa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator3)
-                            .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pwd_pasword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tNisn, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tNis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
@@ -198,7 +210,7 @@ public class login_siswa extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tNisn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5))
@@ -206,12 +218,12 @@ public class login_siswa extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pwd_pasword, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tNis, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(submitSiswa, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(104, Short.MAX_VALUE))
         );
 
@@ -282,25 +294,60 @@ public class login_siswa extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_adminActionPerformed
 
-    private void txt_usernamePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txt_usernamePropertyChange
+    private void tNisnPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tNisnPropertyChange
         // TODO add your handling code here:\
-        txt_username.selectAll();
-    }//GEN-LAST:event_txt_usernamePropertyChange
+        tNisn.selectAll();
+    }//GEN-LAST:event_tNisnPropertyChange
 
-    private void pwd_paswordPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_pwd_paswordPropertyChange
+    private void tNisPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tNisPropertyChange
         // TODO add your handling code here:
-        pwd_pasword.selectAll();
-    }//GEN-LAST:event_pwd_paswordPropertyChange
+        tNis.selectAll();
+    }//GEN-LAST:event_tNisPropertyChange
 
-    private void pwd_paswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pwd_paswordMouseClicked
+    private void tNisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tNisMouseClicked
         // TODO add your handling code here:
-        pwd_pasword.selectAll();
-    }//GEN-LAST:event_pwd_paswordMouseClicked
+        tNis.selectAll();
+    }//GEN-LAST:event_tNisMouseClicked
 
-    private void txt_usernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_usernameMouseClicked
+    private void tNisnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tNisnMouseClicked
         // TODO add your handling code here:
-        txt_username.selectAll();
-    }//GEN-LAST:event_txt_usernameMouseClicked
+        tNisn.selectAll();
+    }//GEN-LAST:event_tNisnMouseClicked
+
+    private void submitSiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitSiswaActionPerformed
+        // TODO add your handling code here:
+        String get_nisn = tNisn.getText();
+        String get_nis = tNis.getText();
+        try {
+            Statement st = con.createStatement();
+            String sql = "SELECT * FROM  siswa where nisn='"+get_nisn+"'and nis = '"+get_nis+"'";
+            rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                String nisn = rs.getString("nisn");
+                String nis = rs.getString("nis");
+                String nama_siswa = rs.getString("nama");
+                
+                
+                //set user data session
+                UserSession.set_nisn(nisn);
+                UserSession.set_nis(nis);
+                UserSession.set_nama_siswa(nama_siswa);
+                
+                JOptionPane.showMessageDialog(null, "Selamat datang "+ nama_siswa +" !");
+                Dashboard dsb = new Dashboard();
+                dsb.dashSiswa();
+                dsb.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                dsb.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "NISN tidak ditemukan");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_submitSiswaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,7 +386,6 @@ public class login_siswa extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_admin;
-    private javax.swing.JButton btn_login;
     private javax.swing.JButton btn_petugas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -362,7 +408,8 @@ public class login_siswa extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPanel pnlInterface;
     private javax.swing.JPanel pnlLogin;
-    private javax.swing.JPasswordField pwd_pasword;
-    private javax.swing.JTextField txt_username;
+    private javax.swing.JButton submitSiswa;
+    private javax.swing.JPasswordField tNis;
+    private javax.swing.JTextField tNisn;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,20 +12,84 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.UIManager;
+import java.io.File;
+import javax.swing.*;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.table.DefaultTableModel;
+import pembayaranspp.KoneksiDB;
+import pembayaranspp.UserSession;
 
 /**
  *
  * @author JUNIARGO
  */
-public class dashboard_admin extends javax.swing.JFrame {
-
+public class Dashboard extends javax.swing.JFrame {
+    Connection con = KoneksiDB.getConnection();
+    ResultSet rs;
+    DefaultTableModel model;
+    
+    //get user data session
+    String id = UserSession.get_id();
+    String username = UserSession.get_username();
+    String nama = UserSession.get_nama();
+    String level = UserSession.get_level();
+    String nisn = UserSession.get_nisn();
+    String nama_siswa = UserSession.get_nama_siswa();
     /**
      * Creates new form dashboard_admin
      */
-    public dashboard_admin() {
+    
+    public Dashboard() {
         initComponents();
+        pnltabed.setEnabledAt(1, false);
     }
     
+    public void dashAdmin() { 
+//        tabelSpp();    
+        tabelTrans();
+//        jumlahDataMaster();
+//        t_Level.setText("ADMINISTRATOR");
+        tNama_user.setText(nama);
+        lbl_user.setText("Selamat Datang "+nama);
+    }
+    
+     public void dashPetugas() {    
+//        tabelSpp();    
+        tabelTrans();
+//        jumlahDataMaster();
+//        t_Level.setText("PETUGAS");
+        tNama_user.setText(nama);   
+        lbl_user.setText(nama);
+        //block akses
+//        mnDataMaster.setVisible(false);
+//        mnLaporan.setVisible(false);
+        btn_kelas.setVisible(false);
+        btn_kelas.setVisible(false);
+        btn_siswa.setVisible(false);
+        btn_spp.setVisible(false);
+        btn_petugas.setVisible(false);
+        btn_administrator.setText("Home");
+        btn_laporan.setVisible(false);
+    }
+     public void dashSiswa() {    
+//        tabelSpp();    
+        tabelTrans();
+//        jumlahDataMaster();
+//        t_Level.setText("PETUGAS");
+        tNama_user.setText(nama_siswa); 
+        lbl_user.setText(nama_siswa);
+        //block akses
+        btn_kelas.setVisible(false);
+        btn_kelas.setVisible(false);
+        btn_siswa.setVisible(false);
+        btn_spp.setVisible(false);
+        btn_petugas.setVisible(false);
+        btn_administrator.setVisible(false);
+        btn_laporan.setVisible(false);
+        btn_pembayaran.setVisible(false);
+    }
 //    Navigasi Button Color
     Color backNavHover = new Color(255,255,255);
     Color foreNavHover = new Color(0,0,0);
@@ -45,7 +109,7 @@ public class dashboard_admin extends javax.swing.JFrame {
 
         pnlMenu = new javax.swing.JPanel();
         lbl_fotouser = new javax.swing.JLabel();
-        lbl_namauser = new javax.swing.JLabel();
+        tNama_user = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btn_administrator = new javax.swing.JButton();
         btn_spp = new javax.swing.JButton();
@@ -58,11 +122,17 @@ public class dashboard_admin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         lbl_user = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        pnltabed = new javax.swing.JTabbedPane();
+        pnlAdmin = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        cariTransaksi = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableTransaksi = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
+        setUndecorated(true);
 
         pnlMenu.setBackground(new java.awt.Color(255, 153, 255));
         pnlMenu.setPreferredSize(new java.awt.Dimension(180, 531));
@@ -73,11 +143,11 @@ public class dashboard_admin extends javax.swing.JFrame {
         lbl_fotouser.setPreferredSize(new java.awt.Dimension(150, 100));
         pnlMenu.add(lbl_fotouser);
 
-        lbl_namauser.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
-        lbl_namauser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_namauser.setText("Admin");
-        lbl_namauser.setPreferredSize(new java.awt.Dimension(150, 25));
-        pnlMenu.add(lbl_namauser);
+        tNama_user.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        tNama_user.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tNama_user.setText("Admin");
+        tNama_user.setPreferredSize(new java.awt.Dimension(150, 25));
+        pnlMenu.add(tNama_user);
 
         jPanel3.setBackground(new java.awt.Color(255, 153, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -90,7 +160,7 @@ public class dashboard_admin extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
         pnlMenu.add(jPanel3);
@@ -107,10 +177,8 @@ public class dashboard_admin extends javax.swing.JFrame {
         btn_administrator.setContentAreaFilled(false);
         btn_administrator.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btn_administrator.setDefaultCapable(false);
-        btn_administrator.setFocusCycleRoot(true);
-        btn_administrator.setFocusTraversalPolicyProvider(true);
+        btn_administrator.setFocusable(false);
         btn_administrator.setHideActionText(true);
-        btn_administrator.setInheritsPopupMenu(true);
         btn_administrator.setOpaque(true);
         btn_administrator.setPreferredSize(new java.awt.Dimension(180, 40));
         btn_administrator.setRequestFocusEnabled(false);
@@ -122,6 +190,11 @@ public class dashboard_admin extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btn_administratorMouseExited(evt);
+            }
+        });
+        btn_administrator.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_administratorActionPerformed(evt);
             }
         });
         pnlMenu.add(btn_administrator);
@@ -138,7 +211,7 @@ public class dashboard_admin extends javax.swing.JFrame {
         btn_spp.setContentAreaFilled(false);
         btn_spp.setDefaultCapable(false);
         btn_spp.setFocusCycleRoot(true);
-        btn_spp.setFocusTraversalPolicyProvider(true);
+        btn_spp.setFocusable(false);
         btn_spp.setHideActionText(true);
         btn_spp.setInheritsPopupMenu(true);
         btn_spp.setOpaque(true);
@@ -155,6 +228,11 @@ public class dashboard_admin extends javax.swing.JFrame {
                 btn_sppMouseExited1(evt);
             }
         });
+        btn_spp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sppActionPerformed(evt);
+            }
+        });
         pnlMenu.add(btn_spp);
 
         btn_kelas.setBackground(new java.awt.Color(255, 153, 255));
@@ -169,7 +247,7 @@ public class dashboard_admin extends javax.swing.JFrame {
         btn_kelas.setContentAreaFilled(false);
         btn_kelas.setDefaultCapable(false);
         btn_kelas.setFocusCycleRoot(true);
-        btn_kelas.setFocusTraversalPolicyProvider(true);
+        btn_kelas.setFocusable(false);
         btn_kelas.setHideActionText(true);
         btn_kelas.setInheritsPopupMenu(true);
         btn_kelas.setOpaque(true);
@@ -199,7 +277,7 @@ public class dashboard_admin extends javax.swing.JFrame {
         btn_siswa.setContentAreaFilled(false);
         btn_siswa.setDefaultCapable(false);
         btn_siswa.setFocusCycleRoot(true);
-        btn_siswa.setFocusTraversalPolicyProvider(true);
+        btn_siswa.setFocusable(false);
         btn_siswa.setHideActionText(true);
         btn_siswa.setInheritsPopupMenu(true);
         btn_siswa.setOpaque(true);
@@ -229,7 +307,7 @@ public class dashboard_admin extends javax.swing.JFrame {
         btn_petugas.setContentAreaFilled(false);
         btn_petugas.setDefaultCapable(false);
         btn_petugas.setFocusCycleRoot(true);
-        btn_petugas.setFocusTraversalPolicyProvider(true);
+        btn_petugas.setFocusable(false);
         btn_petugas.setHideActionText(true);
         btn_petugas.setInheritsPopupMenu(true);
         btn_petugas.setOpaque(true);
@@ -259,7 +337,7 @@ public class dashboard_admin extends javax.swing.JFrame {
         btn_pembayaran.setContentAreaFilled(false);
         btn_pembayaran.setDefaultCapable(false);
         btn_pembayaran.setFocusCycleRoot(true);
-        btn_pembayaran.setFocusTraversalPolicyProvider(true);
+        btn_pembayaran.setFocusable(false);
         btn_pembayaran.setHideActionText(true);
         btn_pembayaran.setInheritsPopupMenu(true);
         btn_pembayaran.setOpaque(true);
@@ -289,7 +367,7 @@ public class dashboard_admin extends javax.swing.JFrame {
         btn_laporan.setContentAreaFilled(false);
         btn_laporan.setDefaultCapable(false);
         btn_laporan.setFocusCycleRoot(true);
-        btn_laporan.setFocusTraversalPolicyProvider(true);
+        btn_laporan.setFocusable(false);
         btn_laporan.setHideActionText(true);
         btn_laporan.setInheritsPopupMenu(true);
         btn_laporan.setOpaque(true);
@@ -319,7 +397,7 @@ public class dashboard_admin extends javax.swing.JFrame {
         btn_logout.setContentAreaFilled(false);
         btn_logout.setDefaultCapable(false);
         btn_logout.setFocusCycleRoot(true);
-        btn_logout.setFocusTraversalPolicyProvider(true);
+        btn_logout.setFocusable(false);
         btn_logout.setHideActionText(true);
         btn_logout.setInheritsPopupMenu(true);
         btn_logout.setOpaque(true);
@@ -360,13 +438,64 @@ public class dashboard_admin extends javax.swing.JFrame {
 
         jPanel2.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        jScrollPane3.setViewportView(jPanel4);
+        pnltabed.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+        pnlAdmin.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel3.setText("Cari Transaksi");
+        pnlAdmin.add(jLabel3);
+
+        cariTransaksi.setPreferredSize(new java.awt.Dimension(900, 25));
+        cariTransaksi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cariTransaksiKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cariTransaksiKeyTyped(evt);
+            }
+        });
+        pnlAdmin.add(cariTransaksi);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1150, 402));
+
+        tableTransaksi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableTransaksi.setEnabled(false);
+        jScrollPane1.setViewportView(tableTransaksi);
+
+        pnlAdmin.add(jScrollPane1);
+
+        pnltabed.addTab("Administrator", pnlAdmin);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 833, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 446, Short.MAX_VALUE)
+        );
+
+        pnltabed.addTab("Intruksi", jPanel4);
+
+        jPanel2.add(pnltabed, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1029, 539));
+        setSize(new java.awt.Dimension(1013, 531));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -492,6 +621,28 @@ public class dashboard_admin extends javax.swing.JFrame {
         new login_admin().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_logoutActionPerformed
+
+    private void btn_administratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_administratorActionPerformed
+        // TODO add your handling code here:
+        pnltabed.setEnabledAt(0,true);        
+        pnltabed.setEnabledAt(1,false);
+        pnltabed.setSelectedIndex(0);
+    }//GEN-LAST:event_btn_administratorActionPerformed
+
+    private void btn_sppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sppActionPerformed
+        // TODO add your handling code here:
+        pnltabed.setEnabledAt(0,false);        
+        pnltabed.setEnabledAt(1,true);
+        pnltabed.setSelectedIndex(1);
+    }//GEN-LAST:event_btn_sppActionPerformed
+
+    private void cariTransaksiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariTransaksiKeyReleased
+        tabelTrans();
+    }//GEN-LAST:event_cariTransaksiKeyReleased
+
+    private void cariTransaksiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariTransaksiKeyTyped
+        tabelTrans();
+    }//GEN-LAST:event_cariTransaksiKeyTyped
     
     /**
      * @param args the command line arguments
@@ -510,24 +661,54 @@ public class dashboard_admin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(dashboard_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(dashboard_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(dashboard_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(dashboard_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new dashboard_admin().setVisible(true);
+                new Dashboard().setVisible(true);
             }
         });
     }
 
+    public void tabelTrans() {
+        String[] judul = {"Tanggal","No. Transaksi","NISN","Nama Siswa","Bulan Dibayar","Tahun","Jumlah Bayar","Petugas"};
+        model = new DefaultTableModel(judul,0);
+        tableTransaksi.setModel(model);
+        String sql = "SELECT *,petugas.*, siswa.* from pembayaran INNER JOIN petugas USING(id_petugas) INNER JOIN siswa USING(nisn) where id_pembayaran like '%"+cariTransaksi.getText()+"%' or nisn like '%"+cariTransaksi.getText()+"%'or nama like '%"+cariTransaksi.getText()+"%' or tahun_dibayar like '%"+cariTransaksi.getText()+"%'";
+       
+        try {
+            rs = con.createStatement().executeQuery(sql);
+           
+            while(rs.next()) {
+               String tanggal = rs.getString("tgl_bayar");
+               String no_transaksi = rs.getString("id_pembayaran");
+               String nisn = rs.getString("nisn");              
+               String nama = rs.getString("nama");              
+               String bulan = rs.getString("bulan_dibayar");               
+               String tahun = rs.getString("tahun_dibayar");
+               String jumlah = rs.getString("jumlah_bayar");
+               String petugas = rs.getString("nama_petugas");
+               
+               String[] data = {tanggal,no_transaksi,nisn,nama,bulan,tahun, jumlah,petugas};
+               model.addRow(data);
+           }
+        }catch(Exception e) {
+           System.out.println(e);
+        }
+    
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_administrator;
     private javax.swing.JButton btn_kelas;
@@ -537,14 +718,19 @@ public class dashboard_admin extends javax.swing.JFrame {
     private javax.swing.JButton btn_petugas;
     private javax.swing.JButton btn_siswa;
     private javax.swing.JButton btn_spp;
+    private javax.swing.JTextField cariTransaksi;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_fotouser;
-    private javax.swing.JLabel lbl_namauser;
     private javax.swing.JLabel lbl_user;
+    private javax.swing.JPanel pnlAdmin;
     private javax.swing.JPanel pnlMenu;
+    private javax.swing.JTabbedPane pnltabed;
+    private javax.swing.JLabel tNama_user;
+    private javax.swing.JTable tableTransaksi;
     // End of variables declaration//GEN-END:variables
 }

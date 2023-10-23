@@ -3,13 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package form.login.com;
-import home.dashboard.com.*;
+import java.sql.*;
+import javax.swing.*;
+import pembayaranspp.KoneksiDB;
+import pembayaranspp.UserSession;
+import home.dashboard.com.Dashboard;
 /**
  *
  * @author JUNIARGO
  */
 public class login_admin extends javax.swing.JFrame {
 
+    Connection con = KoneksiDB.getConnection();;
+    ResultSet rs;
     /**
      * Creates new form login_admin
      */
@@ -39,12 +45,12 @@ public class login_admin extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        pwd_pasword = new javax.swing.JPasswordField();
+        In_password = new javax.swing.JPasswordField();
         jLabel8 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        btn_login = new javax.swing.JButton();
+        submit = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        txt_username = new javax.swing.JTextField();
+        In_username = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -121,11 +127,16 @@ public class login_admin extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 20));
 
-        pwd_pasword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        pwd_pasword.setText("jPasswordField1");
-        pwd_pasword.setBorder(null);
-        pwd_pasword.setMinimumSize(new java.awt.Dimension(64, 30));
-        pwd_pasword.setPreferredSize(new java.awt.Dimension(106, 30));
+        In_password.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        In_password.setText("jPasswordField1");
+        In_password.setBorder(null);
+        In_password.setMinimumSize(new java.awt.Dimension(64, 30));
+        In_password.setPreferredSize(new java.awt.Dimension(106, 30));
+        In_password.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                In_passwordMouseClicked(evt);
+            }
+        });
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/password.png"))); // NOI18N
@@ -133,26 +144,36 @@ public class login_admin extends javax.swing.JFrame {
         jSeparator3.setBackground(new java.awt.Color(153, 51, 255));
         jSeparator3.setForeground(new java.awt.Color(153, 51, 255));
 
-        btn_login.setBackground(new java.awt.Color(153, 51, 255));
-        btn_login.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btn_login.setForeground(new java.awt.Color(255, 255, 255));
-        btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Login.png"))); // NOI18N
-        btn_login.setText("Log in");
-        btn_login.setAlignmentX(0.5F);
-        btn_login.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_login.addActionListener(new java.awt.event.ActionListener() {
+        submit.setBackground(new java.awt.Color(153, 51, 255));
+        submit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        submit.setForeground(new java.awt.Color(255, 255, 255));
+        submit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Login.png"))); // NOI18N
+        submit.setText("Log in");
+        submit.setAlignmentX(0.5F);
+        submit.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_loginActionPerformed(evt);
+                submitActionPerformed(evt);
             }
         });
 
         jSeparator2.setBackground(new java.awt.Color(153, 51, 255));
         jSeparator2.setForeground(new java.awt.Color(153, 51, 255));
 
-        txt_username.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txt_username.setText("Username");
-        txt_username.setBorder(null);
-        txt_username.setPreferredSize(new java.awt.Dimension(66, 30));
+        In_username.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        In_username.setText("Username");
+        In_username.setBorder(null);
+        In_username.setPreferredSize(new java.awt.Dimension(66, 30));
+        In_username.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                In_usernameMouseClicked(evt);
+            }
+        });
+        In_username.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                In_usernamePropertyChange(evt);
+            }
+        });
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/User.png"))); // NOI18N
@@ -164,7 +185,7 @@ public class login_admin extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel10)
@@ -172,8 +193,8 @@ public class login_admin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator3)
-                            .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pwd_pasword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(In_username, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(In_password, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
@@ -183,7 +204,7 @@ public class login_admin extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(In_username, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5))
@@ -191,12 +212,12 @@ public class login_admin extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pwd_pasword, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(In_password, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(104, Short.MAX_VALUE))
         );
 
@@ -267,11 +288,64 @@ public class login_admin extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_petugasActionPerformed
 
-    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+    private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
-        new dashboard_admin().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btn_loginActionPerformed
+        String user = In_username.getText();
+        String pass = In_password.getText();
+
+        try {
+            Statement st = con.createStatement();
+            String sql = "SELECT * FROM  petugas where username='"+user+"' and password='"+pass+"'";
+            rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                String id = rs.getString("id_petugas");
+                String username = rs.getString("username");
+                String nama = rs.getString("nama_petugas");
+                String level = rs.getString("level");
+                
+                //set user data session
+                UserSession.set_id(id);
+                UserSession.set_username(username);
+                UserSession.set_nama(nama);
+                UserSession.set_level(level);
+                
+                switch (level) {
+                    case "admin":
+                    {
+                        JOptionPane.showMessageDialog(null, "Selamat datang "+ nama +" !");
+                        Dashboard dsb = new Dashboard();
+                        dsb.dashAdmin();
+                        dsb.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                        dsb.setVisible(true);
+                        dispose();
+                        break;
+                    }
+                    default:
+                    break;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Username atau password salah");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_submitActionPerformed
+
+    private void In_usernamePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_In_usernamePropertyChange
+        // TODO add your handling code here:
+        In_username.selectAll();
+    }//GEN-LAST:event_In_usernamePropertyChange
+
+    private void In_passwordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_In_passwordMouseClicked
+        // TODO add your handling code here:
+        In_password.selectAll();
+    }//GEN-LAST:event_In_passwordMouseClicked
+
+    private void In_usernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_In_usernameMouseClicked
+        // TODO add your handling code here:
+        In_username.selectAll();
+    }//GEN-LAST:event_In_usernameMouseClicked
 
     /**
      * @param args the command line arguments
@@ -310,7 +384,8 @@ public class login_admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_login;
+    private javax.swing.JPasswordField In_password;
+    private javax.swing.JTextField In_username;
     private javax.swing.JButton btn_petugas;
     private javax.swing.JButton btn_siswa;
     private javax.swing.JLabel jLabel1;
@@ -334,8 +409,7 @@ public class login_admin extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPanel pnlInterface;
     private javax.swing.JPanel pnlLogin;
-    private javax.swing.JPasswordField pwd_pasword;
-    private javax.swing.JTextField txt_username;
+    private javax.swing.JButton submit;
     // End of variables declaration//GEN-END:variables
 
     private Object login_siswa() {
