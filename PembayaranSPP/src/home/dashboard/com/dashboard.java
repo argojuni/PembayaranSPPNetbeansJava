@@ -29,7 +29,8 @@ public class Dashboard extends javax.swing.JFrame {
     Connection con = KoneksiDB.getConnection();
     ResultSet rs;
     DefaultTableModel model;
-    
+    CRUD_Spp crud_spp = new CRUD_Spp();
+
     //get user data session
     String id = UserSession.get_id();
     String username = UserSession.get_username();
@@ -128,7 +129,7 @@ public class Dashboard extends javax.swing.JFrame {
         cariTransaksi = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTransaksi = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
+        mainPnl = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -478,18 +479,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         pnltabed.addTab("Administrator", pnlAdmin);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 833, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 446, Short.MAX_VALUE)
-        );
-
-        pnltabed.addTab("Intruksi", jPanel4);
+        mainPnl.setBackground(new java.awt.Color(255, 255, 255));
+        mainPnl.setLayout(new java.awt.BorderLayout());
+        pnltabed.addTab("Intruksi", mainPnl);
 
         jPanel2.add(pnltabed, java.awt.BorderLayout.CENTER);
 
@@ -634,6 +626,7 @@ public class Dashboard extends javax.swing.JFrame {
         pnltabed.setEnabledAt(0,false);        
         pnltabed.setEnabledAt(1,true);
         pnltabed.setSelectedIndex(1);
+        mainPnl.add(crud_spp).setVisible(true);
     }//GEN-LAST:event_btn_sppActionPerformed
 
     private void cariTransaksiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariTransaksiKeyReleased
@@ -723,10 +716,10 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_fotouser;
     private javax.swing.JLabel lbl_user;
+    private javax.swing.JPanel mainPnl;
     private javax.swing.JPanel pnlAdmin;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JTabbedPane pnltabed;
