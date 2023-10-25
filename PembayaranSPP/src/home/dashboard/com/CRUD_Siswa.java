@@ -4,6 +4,11 @@
  */
 package home.dashboard.com;
 
+import java.sql.*;
+import javax.swing.*;
+import javax.swing.table.*;
+import javax.swing.DefaultComboBoxModel;
+import pembayaranspp.KoneksiDB;
 /**
  *
  * @author JUNIARGO
@@ -15,7 +20,22 @@ public class CRUD_Siswa extends javax.swing.JPanel {
      */
     public CRUD_Siswa() {
         initComponents();
+        
+        tabelSiswa();
+        autofillKELAS();
+        autofillTAHUN();
+        
+        BtnUpdate.setEnabled(false);
     }
+    
+    int _kelas;    
+    int _tahun;
+
+    Statement st;
+    Connection con = KoneksiDB.getConnection();
+    ResultSet rs;
+//    DefaultComboBoxModel modelc;
+    DefaultTableModel model;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,11 +46,505 @@ public class CRUD_Siswa extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        TNISN = new javax.swing.JTextField();
+        TNIS = new javax.swing.JTextField();
+        TNAMA = new javax.swing.JTextField();
+        CBKELAS = new javax.swing.JComboBox<>();
+        TALAMAT = new javax.swing.JTextField();
+        TNOTELP = new javax.swing.JTextField();
+        CBTAHUN = new javax.swing.JComboBox<>();
+        BtnHapus = new javax.swing.JButton();
+        BtnUpdate = new javax.swing.JButton();
+        BtnSimpan = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        cari = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TabelSiswa = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        BtnRefresh = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 204));
+        jPanel1.setMinimumSize(new java.awt.Dimension(10, 50));
+
+        jLabel3.setFont(new java.awt.Font("Open Sans", 1, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("KELOLA DATA SISWA");
+        jPanel1.add(jLabel3);
+
+        add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setBackground(new java.awt.Color(0, 204, 255));
+        jPanel3.setPreferredSize(new java.awt.Dimension(425, 100));
+
+        jLabel2.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel2.setText("NISN");
+
+        jLabel6.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel6.setText("Nama Siswa");
+
+        jLabel7.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel7.setText("Kelas");
+
+        jLabel5.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel5.setText("ALAMAT");
+
+        jLabel8.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel8.setText("NO TELP");
+
+        jLabel9.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel9.setText("TAHUN");
+
+        jLabel4.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel4.setText("NIS SMK");
+
+        TNISN.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        TNISN.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+
+        TNIS.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        TNIS.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+
+        TNAMA.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        TNAMA.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+
+        CBKELAS.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        CBKELAS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "~pilih kelas" }));
+        CBKELAS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CBKELASActionPerformed(evt);
+            }
+        });
+
+        TALAMAT.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        TALAMAT.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+
+        TNOTELP.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        TNOTELP.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+
+        CBTAHUN.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        CBTAHUN.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "~angkatan tahun" }));
+        CBTAHUN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CBTAHUNActionPerformed(evt);
+            }
+        });
+
+        BtnHapus.setBackground(new java.awt.Color(204, 0, 0));
+        BtnHapus.setFont(new java.awt.Font("Open Sans ExtraBold", 1, 14)); // NOI18N
+        BtnHapus.setForeground(new java.awt.Color(255, 255, 255));
+        BtnHapus.setText("Hapus");
+        BtnHapus.setMinimumSize(new java.awt.Dimension(85, 29));
+        BtnHapus.setPreferredSize(new java.awt.Dimension(85, 29));
+        BtnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnHapusActionPerformed(evt);
+            }
+        });
+
+        BtnUpdate.setBackground(new java.awt.Color(0, 153, 0));
+        BtnUpdate.setFont(new java.awt.Font("Open Sans ExtraBold", 1, 14)); // NOI18N
+        BtnUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        BtnUpdate.setText("Ubah");
+        BtnUpdate.setMinimumSize(new java.awt.Dimension(85, 29));
+        BtnUpdate.setPreferredSize(new java.awt.Dimension(85, 29));
+        BtnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnUpdateActionPerformed(evt);
+            }
+        });
+
+        BtnSimpan.setBackground(new java.awt.Color(0, 0, 153));
+        BtnSimpan.setFont(new java.awt.Font("Open Sans ExtraBold", 1, 14)); // NOI18N
+        BtnSimpan.setForeground(new java.awt.Color(255, 255, 255));
+        BtnSimpan.setText("Simpan");
+        BtnSimpan.setPreferredSize(new java.awt.Dimension(85, 29));
+        BtnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSimpanActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(BtnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(BtnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(BtnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel7))
+                                .addGap(41, 41, 41))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TNISN, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TNIS, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TNAMA, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CBKELAS, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TALAMAT, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TNOTELP, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CBTAHUN, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TNISN, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TNIS, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel6)
+                        .addGap(215, 215, 215))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(TNAMA, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CBKELAS, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TALAMAT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TNOTELP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CBTAHUN, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(86, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(jPanel3, java.awt.BorderLayout.LINE_START);
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jPanel5.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setBackground(new java.awt.Color(0, 102, 255));
+        jLabel1.setFont(new java.awt.Font("Open Sans ExtraBold", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Cari NISN/Nama");
+        jPanel5.add(jLabel1, java.awt.BorderLayout.WEST);
+
+        cari.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        cari.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        cari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cariKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cariKeyReleased(evt);
+            }
+        });
+        jPanel5.add(cari, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(jPanel5, java.awt.BorderLayout.PAGE_START);
+
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        TabelSiswa.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        TabelSiswa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        TabelSiswa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelSiswaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TabelSiswa);
+
+        jPanel6.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(jPanel6, java.awt.BorderLayout.CENTER);
+
+        jPanel7.setLayout(new java.awt.BorderLayout());
+
+        BtnRefresh.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        BtnRefresh.setForeground(new java.awt.Color(0, 0, 153));
+        BtnRefresh.setText("Refresh Table");
+        BtnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRefreshActionPerformed(evt);
+            }
+        });
+        jPanel7.add(BtnRefresh, java.awt.BorderLayout.PAGE_START);
+
+        jPanel4.add(jPanel7, java.awt.BorderLayout.PAGE_END);
+
+        jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
+
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CBKELASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBKELASActionPerformed
+        try {
+            String comboboxIsi = CBKELAS.getSelectedItem().toString();
+            rs = con.createStatement().executeQuery("select * from kelas where nama_kelas='"+comboboxIsi+"'");
+            while(rs.next()) {
+                _kelas = Integer.parseInt(rs.getString("id_kelas"));
+            }
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_CBKELASActionPerformed
+
+    private void CBTAHUNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBTAHUNActionPerformed
+        try {
+            String comboboxIsi = CBTAHUN.getSelectedItem().toString();
+            rs = con.createStatement().executeQuery("select * from spp where tahun='"+comboboxIsi+"'");
+            while(rs.next()) {
+                _tahun = Integer.parseInt(rs.getString("id_spp"));
+            }
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_CBTAHUNActionPerformed
+
+    private void BtnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHapusActionPerformed
+        try {
+            con.createStatement().executeUpdate("delete from siswa where nisn ='"+TNISN.getText()+"'");
+            JOptionPane.showMessageDialog(null, "berhasil");
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "gagal");
+        }
+        resetForm();
+    }//GEN-LAST:event_BtnHapusActionPerformed
+
+    private void BtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnUpdateActionPerformed
+        try {
+            String valueKelas = CBKELAS.getSelectedItem().toString();
+            String valueTahun = CBTAHUN.getSelectedItem().toString();
+
+            ResultSet rsKelas = con.createStatement().executeQuery("select id_kelas from kelas where nama_kelas='"+valueKelas+"'");
+            ResultSet rsTahun = con.createStatement().executeQuery("select id_spp from spp where tahun='"+valueTahun+"'");
+
+            while(rsKelas.next()) {
+                _kelas = Integer.parseInt(rsKelas.getString("id_kelas"));
+            }
+            while(rsTahun.next()) {
+                _tahun = Integer.parseInt(rsTahun.getString("id_spp"));
+            }
+            String nis = TNIS.getText();
+            String nama = TNAMA.getText();
+            String alamat = TALAMAT.getText();
+            String telp = TNOTELP.getText();
+
+            con.createStatement().executeUpdate("update siswa set nis='"+nis+"', nama='"+nama+"',id_kelas='"+_kelas+"', alamat='"+alamat+"', no_telp='"+telp+"', id_spp='"+_tahun+"' where nisn='"+model.getValueAt(TabelSiswa.getSelectedRow(),0)+"'");
+            JOptionPane.showMessageDialog(this, "Data Berhasil Di Edit");
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+        resetForm();
+    }//GEN-LAST:event_BtnUpdateActionPerformed
+
+    private void BtnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSimpanActionPerformed
+        String nisn = TNISN.getText();
+        String nis = TNIS.getText();
+        String nama = TNAMA.getText();
+        int kelas =  _kelas;
+        String alamat = TALAMAT.getText();
+        String telp = TNOTELP.getText();
+        int tahun =  _tahun;
+
+        try{
+            con.createStatement().executeUpdate("insert into siswa value ('"+nisn+"','"+nis+"','"+nama+"','"+kelas+"','"+alamat+"','"+telp+"','"+tahun+"')");
+            JOptionPane.showMessageDialog(null, "Data siswa berhasil ditambahkan");
+            resetForm();
+        }catch (Exception ex) {
+            System.out.println(""+ex);
+            JOptionPane.showMessageDialog(null, "Gagal!");
+        }
+    }//GEN-LAST:event_BtnSimpanActionPerformed
+
+    private void cariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariKeyPressed
+        tabelSiswa();
+    }//GEN-LAST:event_cariKeyPressed
+
+    private void cariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariKeyReleased
+        tabelSiswa();
+    }//GEN-LAST:event_cariKeyReleased
+
+    private void TabelSiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelSiswaMouseClicked
+
+        int i = TabelSiswa.getSelectedRow();
+        TNISN.setText(model.getValueAt(i, 0).toString());
+        TNIS.setText(model.getValueAt(i, 1).toString());
+        TNAMA.setText(model.getValueAt(i, 2).toString());
+        CBKELAS.setSelectedItem(model.getValueAt(i, 3));
+        TALAMAT.setText(model.getValueAt(i, 4).toString());
+        TNOTELP.setText(model.getValueAt(i, 5).toString());
+        CBTAHUN.setSelectedItem(model.getValueAt(i, 6));
+
+        //       disabled item on klik row table
+        TNISN.setEnabled(false);
+        BtnSimpan.setEnabled(false);
+        BtnUpdate.setEnabled(true);
+    }//GEN-LAST:event_TabelSiswaMouseClicked
+
+    private void BtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRefreshActionPerformed
+        resetForm();
+        BtnUpdate.setEnabled(false);
+        BtnSimpan.setEnabled(true);
+    }//GEN-LAST:event_BtnRefreshActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnHapus;
+    private javax.swing.JButton BtnRefresh;
+    private javax.swing.JButton BtnSimpan;
+    private javax.swing.JButton BtnUpdate;
+    private javax.swing.JComboBox<String> CBKELAS;
+    private javax.swing.JComboBox<String> CBTAHUN;
+    private javax.swing.JTextField TALAMAT;
+    private javax.swing.JTextField TNAMA;
+    private javax.swing.JTextField TNIS;
+    private javax.swing.JTextField TNISN;
+    private javax.swing.JTextField TNOTELP;
+    private javax.swing.JTable TabelSiswa;
+    private javax.swing.JTextField cari;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+private void tabelSiswa() {
+        String[] judul = {"NISN","NIS","Nama","Kelas","Alamat","Telepon","Tahun"};
+        model = new DefaultTableModel(judul,0);
+        TabelSiswa.setModel(model);
+        String sql = "SELECT siswa.*, kelas.nama_kelas, spp.tahun from siswa INNER JOIN kelas USING(id_kelas) INNER JOIN spp Using(id_spp) where nisn like '%"+cari.getText()+"%' or nama like '%"+cari.getText()+"%'";
+        
+        try {
+            rs = con.createStatement().executeQuery(sql);
+            
+            while(rs.next()) {
+               String nisn = rs.getString("nisn");
+               String nis = rs.getString("nis");
+               String nama = rs.getString("nama");
+               String kelas = rs.getString("nama_kelas");
+               String alamat = rs.getString("alamat");
+               String telp = rs.getString("no_telp");
+               String tahun = rs.getString("tahun");
+                
+               String[] data = {nisn, nis, nama, kelas, alamat, telp, tahun};
+               model.addRow(data);
+           }
+        }catch(Exception e) {
+           System.out.println(e);
+        }
+    
+    }
+    
+    private void autofillKELAS() {                
+       try {
+           rs = con.createStatement().executeQuery("select * from kelas");
+           while (rs.next()) {
+               CBKELAS.addItem(rs.getString("nama_kelas"));
+           }         
+       } catch (Exception e) {
+           System.out.println(e);
+       }
+    }
+    
+    private void autofillTAHUN() {                
+       try {
+           rs = con.createStatement().executeQuery("select * from spp");
+           while (rs.next()) {
+               CBTAHUN.addItem(rs.getString("tahun"));
+           }         
+       } catch (Exception e) {
+           System.out.println(e);
+       }
+    }
+
+    public void resetForm(){
+        TNISN.setText("");
+        TNIS.setText("");
+        TNAMA.setText("");
+        CBKELAS.setSelectedItem("~pilih kelas");
+        TALAMAT.setText("");
+        TNOTELP.setText("");
+        CBTAHUN.setSelectedItem("~angkatan tahun");
+        
+        tabelSiswa();
+        BtnSimpan.setEnabled(true);
+        TNISN.setEnabled(true);
+    }
 }

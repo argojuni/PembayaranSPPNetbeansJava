@@ -28,7 +28,7 @@ public class CRUD_Spp extends javax.swing.JPanel {
     Statement st;
     Connection con = KoneksiDB.getConnection();
     ResultSet rs;
-    DefaultComboBoxModel modelc;
+//    DefaultComboBoxModel modelc;
     DefaultTableModel model;
     /**
      * This method is called from within the constructor to initialize the form.
