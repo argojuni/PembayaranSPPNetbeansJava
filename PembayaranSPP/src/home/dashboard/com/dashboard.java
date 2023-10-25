@@ -30,6 +30,7 @@ public class Dashboard extends javax.swing.JFrame {
     ResultSet rs;
     DefaultTableModel model;
     CRUD_Spp crud_spp = new CRUD_Spp();
+    CRUD_Siswa crud_siswa = new CRUD_Siswa();
 
     //get user data session
     String id = UserSession.get_id();
@@ -48,7 +49,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
     
     public void dashAdmin() { 
-//        tabelSpp();    
+        tabelSpp();    
         tabelTrans();
 //        jumlahDataMaster();
 //        t_Level.setText("ADMINISTRATOR");
@@ -57,7 +58,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
     
      public void dashPetugas() {    
-//        tabelSpp();    
+        tabelSpp();    
         tabelTrans();
 //        jumlahDataMaster();
 //        t_Level.setText("PETUGAS");
@@ -75,7 +76,7 @@ public class Dashboard extends javax.swing.JFrame {
         btn_laporan.setVisible(false);
     }
      public void dashSiswa() {    
-//        tabelSpp();    
+        tabelSpp();    
         tabelTrans();
 //        jumlahDataMaster();
 //        t_Level.setText("PETUGAS");
@@ -108,6 +109,15 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel5 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jml_petugas = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jml_siswa = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jml_kelas = new javax.swing.JLabel();
         pnlMenu = new javax.swing.JPanel();
         lbl_fotouser = new javax.swing.JLabel();
         tNama_user = new javax.swing.JLabel();
@@ -129,7 +139,104 @@ public class Dashboard extends javax.swing.JFrame {
         cariTransaksi = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTransaksi = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        JtabelSpp = new javax.swing.JTable();
         mainPnl = new javax.swing.JPanel();
+
+        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
+
+        jLabel6.setFont(new java.awt.Font("Open Sans", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("PETUGAS ");
+
+        jml_petugas.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
+        jml_petugas.setForeground(new java.awt.Color(255, 255, 255));
+        jml_petugas.setText("0");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jml_petugas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jml_petugas)
+                    .addComponent(jLabel6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBackground(new java.awt.Color(102, 102, 102));
+
+        jLabel8.setFont(new java.awt.Font("Open Sans", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("SISWA");
+
+        jml_siswa.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
+        jml_siswa.setForeground(new java.awt.Color(255, 255, 255));
+        jml_siswa.setText("0");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jml_siswa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jml_siswa)
+                    .addComponent(jLabel8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel7.setBackground(new java.awt.Color(102, 102, 102));
+
+        jLabel12.setFont(new java.awt.Font("Open Sans", 1, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("KELAS");
+
+        jml_kelas.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
+        jml_kelas.setForeground(new java.awt.Color(255, 255, 255));
+        jml_kelas.setText("0");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jml_kelas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addGap(18, 18, 18))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jml_kelas)
+                    .addComponent(jLabel12))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -292,6 +399,11 @@ public class Dashboard extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btn_siswaMouseExited(evt);
+            }
+        });
+        btn_siswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_siswaActionPerformed(evt);
             }
         });
         pnlMenu.add(btn_siswa);
@@ -459,7 +571,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
         pnlAdmin.add(cariTransaksi);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(1150, 402));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1150, 300));
 
         tableTransaksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -477,6 +589,50 @@ public class Dashboard extends javax.swing.JFrame {
 
         pnlAdmin.add(jScrollPane1);
 
+        jPanel4.setPreferredSize(new java.awt.Dimension(1150, 452));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("DATA ANGKATAN");
+        jLabel2.setPreferredSize(new java.awt.Dimension(1000, 20));
+
+        JtabelSpp.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        JtabelSpp.setColumnSelectionAllowed(true);
+        JtabelSpp.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JtabelSpp.setEnabled(false);
+        jScrollPane2.setViewportView(JtabelSpp);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(359, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(339, 339, 339))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pnlAdmin.add(jPanel4);
+
         pnltabed.addTab("Administrator", pnlAdmin);
 
         mainPnl.setBackground(new java.awt.Color(255, 255, 255));
@@ -487,7 +643,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1013, 531));
+        setSize(new java.awt.Dimension(1093, 851));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -626,7 +782,9 @@ public class Dashboard extends javax.swing.JFrame {
         pnltabed.setEnabledAt(0,false);        
         pnltabed.setEnabledAt(1,true);
         pnltabed.setSelectedIndex(1);
+        mainPnl.add(crud_siswa).setVisible(false);
         mainPnl.add(crud_spp).setVisible(true);
+
     }//GEN-LAST:event_btn_sppActionPerformed
 
     private void cariTransaksiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariTransaksiKeyReleased
@@ -636,6 +794,16 @@ public class Dashboard extends javax.swing.JFrame {
     private void cariTransaksiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariTransaksiKeyTyped
         tabelTrans();
     }//GEN-LAST:event_cariTransaksiKeyTyped
+
+    private void btn_siswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_siswaActionPerformed
+        // TODO add your handling code here:
+        pnltabed.setEnabledAt(0,false);        
+        pnltabed.setEnabledAt(1,true);
+        pnltabed.setSelectedIndex(1);
+        mainPnl.add(crud_spp).setVisible(false);
+        mainPnl.add(crud_siswa).setVisible(true);
+
+    }//GEN-LAST:event_btn_siswaActionPerformed
     
     /**
      * @param args the command line arguments
@@ -699,10 +867,32 @@ public class Dashboard extends javax.swing.JFrame {
            }
         }catch(Exception e) {
            System.out.println(e);
-        }
-    
+        }    
     }
+    
+    private void tabelSpp() {
+        String[] judul = {"Tahun","Nominal"};
+        model = new DefaultTableModel(judul,0);
+        JtabelSpp.setModel(model);
+        String sql = "SELECT tahun, nominal from spp";
+       
+        try {
+            rs = con.createStatement().executeQuery(sql);
+            
+            while(rs.next()) {
+               String tahun = rs.getString("tahun");
+               String nominal = rs.getString("nominal");
+                
+               String[] data = {tahun,nominal};
+               model.addRow(data);
+           }
+        }catch(Exception e) {
+           System.out.println(e);
+        }
+    }       
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable JtabelSpp;
     private javax.swing.JButton btn_administrator;
     private javax.swing.JButton btn_kelas;
     private javax.swing.JButton btn_laporan;
@@ -712,11 +902,23 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btn_siswa;
     private javax.swing.JButton btn_spp;
     private javax.swing.JTextField cariTransaksi;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel jml_kelas;
+    private javax.swing.JLabel jml_petugas;
+    private javax.swing.JLabel jml_siswa;
     private javax.swing.JLabel lbl_fotouser;
     private javax.swing.JLabel lbl_user;
     private javax.swing.JPanel mainPnl;
