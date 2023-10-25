@@ -74,10 +74,12 @@ public class Dashboard extends javax.swing.JFrame {
         btn_petugas.setVisible(false);
         btn_administrator.setText("Home");
         btn_laporan.setVisible(false);
+        pnltabed.setTitleAt(0,"Petugas");
+
     }
      public void dashSiswa() {    
         tabelSpp();    
-        tabelTrans();
+        tabelSiswa();
 //        jumlahDataMaster();
 //        t_Level.setText("PETUGAS");
         tNama_user.setText(nama_siswa); 
@@ -91,6 +93,9 @@ public class Dashboard extends javax.swing.JFrame {
         btn_administrator.setVisible(false);
         btn_laporan.setVisible(false);
         btn_pembayaran.setVisible(false);
+        jLabelCari.setVisible(false);
+        cariTransaksi.setVisible(false);
+        pnltabed.setTitleAt(0,"History");
     }
 //    Navigasi Button Color
     Color backNavHover = new Color(255,255,255);
@@ -135,7 +140,7 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_user = new javax.swing.JLabel();
         pnltabed = new javax.swing.JTabbedPane();
         pnlAdmin = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelCari = new javax.swing.JLabel();
         cariTransaksi = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTransaksi = new javax.swing.JTable();
@@ -555,10 +560,10 @@ public class Dashboard extends javax.swing.JFrame {
 
         pnlAdmin.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel3.setText("Cari Transaksi");
-        pnlAdmin.add(jLabel3);
+        jLabelCari.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelCari.setForeground(new java.awt.Color(102, 102, 102));
+        jLabelCari.setText("Cari Transaksi");
+        pnlAdmin.add(jLabelCari);
 
         cariTransaksi.setPreferredSize(new java.awt.Dimension(900, 25));
         cariTransaksi.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -848,7 +853,32 @@ public class Dashboard extends javax.swing.JFrame {
         model = new DefaultTableModel(judul,0);
         tableTransaksi.setModel(model);
         String sql = "SELECT *,petugas.*, siswa.* from pembayaran INNER JOIN petugas USING(id_petugas) INNER JOIN siswa USING(nisn) where id_pembayaran like '%"+cariTransaksi.getText()+"%' or nisn like '%"+cariTransaksi.getText()+"%'or nama like '%"+cariTransaksi.getText()+"%' or tahun_dibayar like '%"+cariTransaksi.getText()+"%'";
-       
+        try {
+            rs = con.createStatement().executeQuery(sql);
+           
+            while(rs.next()) {
+               String tanggal = rs.getString("tgl_bayar");
+               String no_transaksi = rs.getString("id_pembayaran");
+               String nisn = rs.getString("nisn");              
+               String nama = rs.getString("nama");              
+               String bulan = rs.getString("bulan_dibayar");               
+               String tahun = rs.getString("tahun_dibayar");
+               String jumlah = rs.getString("jumlah_bayar");
+               String petugas = rs.getString("nama_petugas");
+               
+               String[] data = {tanggal,no_transaksi,nisn,nama,bulan,tahun, jumlah,petugas};
+               model.addRow(data);
+           }
+        }catch(Exception e) {
+           System.out.println(e);
+        }    
+    }
+    
+    public void tabelSiswa() {
+        String[] judul = {"Tanggal","No. Transaksi","NISN","Nama Siswa","Bulan Dibayar","Tahun","Jumlah Bayar","Petugas"};
+        model = new DefaultTableModel(judul,0);
+        tableTransaksi.setModel(model);
+        String sql = "SELECT *,petugas.*, siswa.* from pembayaran INNER JOIN petugas USING(id_petugas) INNER JOIN siswa USING(nisn) where nama like '%"+nama_siswa+"%' ";
         try {
             rs = con.createStatement().executeQuery(sql);
            
@@ -904,9 +934,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField cariTransaksi;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelCari;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
