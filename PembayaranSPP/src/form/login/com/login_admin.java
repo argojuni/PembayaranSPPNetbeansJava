@@ -322,7 +322,12 @@ public class login_admin extends javax.swing.JFrame {
                         break;
                     }
                     default:
-                    break;
+                    {
+                        JOptionPane.showMessageDialog(null, "Anda bukan admin");
+                        break;
+                    }
+//                    default:
+//                    break;
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Username atau password salah");

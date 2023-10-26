@@ -337,7 +337,12 @@ public class login_petugas extends javax.swing.JFrame {
                         break;
                     }
                     default:
-                    break;
+                    {
+                        JOptionPane.showMessageDialog(null, "Anda bukan petugas");
+                        break;
+                    }
+//                    default:
+//                    break;
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Username atau password salah");
