@@ -31,6 +31,10 @@ public class Dashboard extends javax.swing.JFrame {
     DefaultTableModel model;
     CRUD_Spp crud_spp = new CRUD_Spp();
     CRUD_Siswa crud_siswa = new CRUD_Siswa();
+    CRUD_Kelas crud_kelas = new CRUD_Kelas();
+    CRUD_Petugas crud_petugas = new CRUD_Petugas();
+    FormTransaksi form_transaksi = new FormTransaksi();
+
 
     //get user data session
     String id = UserSession.get_id();
@@ -376,6 +380,11 @@ public class Dashboard extends javax.swing.JFrame {
                 btn_kelasMouseExited(evt);
             }
         });
+        btn_kelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kelasActionPerformed(evt);
+            }
+        });
         pnlMenu.add(btn_kelas);
 
         btn_siswa.setBackground(new java.awt.Color(255, 153, 255));
@@ -441,6 +450,11 @@ public class Dashboard extends javax.swing.JFrame {
                 btn_petugasMouseExited(evt);
             }
         });
+        btn_petugas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_petugasActionPerformed(evt);
+            }
+        });
         pnlMenu.add(btn_petugas);
 
         btn_pembayaran.setBackground(new java.awt.Color(255, 153, 255));
@@ -469,6 +483,11 @@ public class Dashboard extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btn_pembayaranMouseExited(evt);
+            }
+        });
+        btn_pembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pembayaranActionPerformed(evt);
             }
         });
         pnlMenu.add(btn_pembayaran);
@@ -788,8 +807,10 @@ public class Dashboard extends javax.swing.JFrame {
         pnltabed.setEnabledAt(1,true);
         pnltabed.setSelectedIndex(1);
         mainPnl.add(crud_siswa).setVisible(false);
+        mainPnl.add(crud_kelas).setVisible(false);
+        mainPnl.add(crud_petugas).setVisible(false);
+        mainPnl.add(form_transaksi).setVisible(false);
         mainPnl.add(crud_spp).setVisible(true);
-
     }//GEN-LAST:event_btn_sppActionPerformed
 
     private void cariTransaksiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cariTransaksiKeyReleased
@@ -805,9 +826,57 @@ public class Dashboard extends javax.swing.JFrame {
         pnltabed.setEnabledAt(0,false);        
         pnltabed.setEnabledAt(1,true);
         pnltabed.setSelectedIndex(1);
+        mainPnl.add(crud_kelas).setVisible(false);
         mainPnl.add(crud_spp).setVisible(false);
+        mainPnl.add(crud_petugas).setVisible(false);
+        mainPnl.add(form_transaksi).setVisible(false);
         mainPnl.add(crud_siswa).setVisible(true);
+
     }//GEN-LAST:event_btn_siswaActionPerformed
+
+    private void btn_kelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kelasActionPerformed
+        // TODO add your handling code here:
+        pnltabed.setEnabledAt(0,false);        
+        pnltabed.setEnabledAt(1,true);
+        pnltabed.setSelectedIndex(1);
+        mainPnl.add(crud_siswa).setVisible(false);
+        mainPnl.add(crud_spp).setVisible(false);
+        mainPnl.add(crud_petugas).setVisible(false);
+        mainPnl.add(form_transaksi).setVisible(false);
+        mainPnl.add(crud_kelas).setVisible(true);
+    }//GEN-LAST:event_btn_kelasActionPerformed
+
+    private void btn_petugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_petugasActionPerformed
+        // TODO add your handling code here:
+        pnltabed.setEnabledAt(0,false);        
+        pnltabed.setEnabledAt(1,true);
+        pnltabed.setSelectedIndex(1);
+        mainPnl.add(crud_siswa).setVisible(false);
+        mainPnl.add(crud_kelas).setVisible(false);
+        mainPnl.add(crud_spp).setVisible(false);
+        mainPnl.add(form_transaksi).setVisible(false);
+        mainPnl.add(crud_petugas).setVisible(true);
+
+    }//GEN-LAST:event_btn_petugasActionPerformed
+
+    private void btn_pembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pembayaranActionPerformed
+        // TODO add your handling code here:
+//        new FormTransaksiT().setVisible(true); 
+//        dispose();
+        pnltabed.setEnabledAt(0,false);        
+        pnltabed.setEnabledAt(1,true);
+        pnltabed.setSelectedIndex(1);
+        
+        FormTransaksi formTransaksi = new FormTransaksi();
+        formTransaksi.resetForm();
+        formTransaksi.repaint();
+        
+        mainPnl.add(crud_siswa).setVisible(false);
+        mainPnl.add(crud_kelas).setVisible(false);
+        mainPnl.add(crud_spp).setVisible(false);
+        mainPnl.add(crud_petugas).setVisible(false);
+        mainPnl.add(form_transaksi).setVisible(true);
+    }//GEN-LAST:event_btn_pembayaranActionPerformed
     
     /**
      * @param args the command line arguments

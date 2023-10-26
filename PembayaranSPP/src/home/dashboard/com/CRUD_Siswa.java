@@ -93,7 +93,7 @@ public class CRUD_Siswa extends javax.swing.JPanel {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jPanel3.setBackground(new java.awt.Color(0, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(51, 204, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(425, 100));
 
         jLabel2.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
