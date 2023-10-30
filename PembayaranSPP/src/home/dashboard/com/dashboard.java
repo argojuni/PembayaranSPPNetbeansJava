@@ -15,11 +15,20 @@ import javax.swing.UIManager;
 import java.io.File;
 import javax.swing.*;
 import java.sql.*;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import pembayaranspp.KoneksiDB;
 import pembayaranspp.UserSession;
+import java.text.*;
+import java.awt.print.*;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -520,6 +529,11 @@ public class Dashboard extends javax.swing.JFrame {
                 btn_laporanMouseExited(evt);
             }
         });
+        btn_laporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_laporanActionPerformed(evt);
+            }
+        });
         pnlMenu.add(btn_laporan);
 
         btn_logout.setBackground(new java.awt.Color(255, 153, 255));
@@ -877,6 +891,36 @@ public class Dashboard extends javax.swing.JFrame {
         mainPnl.add(crud_petugas).setVisible(false);
         mainPnl.add(form_transaksi).setVisible(true);
     }//GEN-LAST:event_btn_pembayaranActionPerformed
+
+    private void btn_laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laporanActionPerformed
+//        MessageFormat header = new MessageFormat("Report Print");
+//        MessageFormat footer = new MessageFormat("Page 0, number, integer");
+//
+//        try{
+//            tableTransaksi.print(JTable.PrintMode.NORMAL, header, footer);
+//        }catch(java.awt.print.PrinterException e){
+//            System.err.format("Canont print %s%n", e.getMessage());
+//        }
+try {
+            KoneksiDB.getConnection();
+            try {
+                Map<String, Object> parameter = new HashMap<String, Object>();
+                
+                File rpt = new File("src/laporan/report_trans.jrxml");
+                JasperDesign jasDesign = JRXmlLoader.load(rpt);
+                parameter.clear();
+                JasperReport jasReport = JasperCompileManager.compileReport(jasDesign);
+                JasperPrint jasPrint = net.sf.jasperreports.engine.JasperFillManager.fillReport(jasReport, 
+                        parameter, KoneksiDB.getConnection());
+                JasperViewer.viewReport(jasPrint, false);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Laporan tidak ditemukan" + e);
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+        }
+    }//GEN-LAST:event_btn_laporanActionPerformed
     
     /**
      * @param args the command line arguments
