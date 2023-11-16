@@ -502,16 +502,24 @@ public class FormTransaksi extends javax.swing.JPanel {
             
             if(btnSimpan.getText().equals("Bayar")){
                 Statement st = con.createStatement();
+                
                 String sql = "SELECT * FROM  pembayaran where nisn='"+nisn+"' and bulan_dibayar='"+bln_bayar+"'";
                 rs = st.executeQuery(sql);
 
                 if (rs.next()) {
                     JOptionPane.showMessageDialog(null, "Gagal : Transaksi ini sudah dilakukan!");
                 } else {
-                    con.createStatement().executeUpdate("insert into pembayaran value ('"+no_trans+"','"+id_petugas+"','"+nisn+"','"+tgl+"','"+bln_bayar+"','"+angkatan+"','"+id_angkatan+"','"+jml_bayar+"')");
+                    // Mengambil jumlah pembayaran sebelumnya
+                    double SPjumlahBayarSebelumnya = getJumlahBayarSebelumnya(nisn, bln_bayar);
+
+                    // Total jumlah bayar baru
+                    double SPjumlahBayarBaru = Double.parseDouble(jml_bayar) + SPjumlahBayarSebelumnya;
+                    
+                    con.createStatement().executeUpdate("insert into pembayaran value ('"+no_trans+"','"+id_petugas+"','"+nisn+"','"+tgl+"','"+bln_bayar+"','"+angkatan+"','"+id_angkatan+"','"+SPjumlahBayarBaru+"')");
                     JOptionPane.showMessageDialog(null, "Berhasil melakukan transaksi");
                 }
-            }else{
+            }
+            if(btnSimpan.getText().equals("Ubah")){
                 double kekurangan = getKekurangan(nisn, bln_bayar);
 
             if (kekurangan <= 0) {
@@ -697,58 +705,66 @@ private void tabelSiswa() {
         }
     
     }
-    private void tabelStatBayar() {
+
+private void tabelStatBayar() {
     String[] header = {"No Transaksi", "Tanggal", "Bulan", "Jumlah Bayar", "Status"};
     modelStatus = new DefaultTableModel(header, 0);
     tabelStatusBayar.setModel(modelStatus);
-    String dataStat = "SELECT * from pembayaran where nisn='" + tNisn.getText() + "'";
+    String dataStat = "SELECT * FROM pembayaran WHERE nisn=?";
 
-    try {
-        ResultSet queryStat = con.createStatement().executeQuery(dataStat);
-        
+    try (PreparedStatement pstmt = con.prepareStatement(dataStat)) {
+        pstmt.setString(1, tNisn.getText());
+        ResultSet queryStat = pstmt.executeQuery();
+
         // Mengambil jumlah nominal
         double nominal = 0;
-        String nominalQuery = "SELECT nominal FROM spp WHERE id_spp = (SELECT id_spp FROM siswa WHERE nisn = '" + tNisn.getText() + "')";
-        ResultSet nominalResult = con.createStatement().executeQuery(nominalQuery);
-        if (nominalResult.next()) {
-            nominal = nominalResult.getDouble("nominal");
+        String nominalQuery = "SELECT nominal FROM spp WHERE id_spp = (SELECT id_spp FROM siswa WHERE nisn = ?)";
+        try (PreparedStatement nominalStmt = con.prepareStatement(nominalQuery)) {
+            nominalStmt.setString(1, tNisn.getText());
+            ResultSet nominalResult = nominalStmt.executeQuery();
+            if (nominalResult.next()) {
+                nominal = nominalResult.getDouble("nominal");
+            }
         }
 
+        double sudah_bayar = 0;
         while (queryStat.next()) {
             String no = queryStat.getString("id_pembayaran");
             String tanggal = queryStat.getString("tgl_bayar");
             String bulan = queryStat.getString("bulan_dibayar");
-            String jumlah = queryStat.getString("jumlah_bayar");
+            double jumlahBayar = queryStat.getDouble("jumlah_bayar");
 
             // Menghitung jumlah pembayaran
-            String pembayaranQuery = "SELECT SUM(jumlah_bayar) as jumlah_bayar FROM pembayaran WHERE nisn='" + tNisn.getText() + "'";
-            Statement pembayaranStatement = con.createStatement();
-            ResultSet pembayaranResult = pembayaranStatement.executeQuery(pembayaranQuery);
+            sudah_bayar += jumlahBayar;
 
-            double sudah_bayar = 0;
-            if (pembayaranResult.next()) {
-                sudah_bayar = pembayaranResult.getDouble("jumlah_bayar");
+            // Menghitung sisa kekurangan
+            double kekurangan = getKekurangan(tNisn.getText(), bulan);
+
+            String status = (sudah_bayar == nominal) ? "Lunas" : "Kekurangan " + String.format("%.0f", kekurangan);
+            
+            if(status.equals("Kekurangan 0")){
+                status = "Lunas";
             }
-
-            String status = (sudah_bayar >= nominal) ? "Lunas" : "Kekurangan " + String.format("%.0f", (nominal - sudah_bayar));
-            tNama_siswa1.setText(status);
-            String[] record = {no, tanggal, bulan, jumlah, status};
+            
+            tNama_siswa.setText(status);
+   
+            String[] record = {no, tanggal, bulan, String.format("%.0f", jumlahBayar) , status};
             modelStatus.addRow(record);
-            if(status.equals("Lunas")){
+            
+            if (status.equals("Lunas")) {
                 btnSimpan.setEnabled(false);
                 btnSimpan.setForeground(Color.white);
-                btnSimpan.setBackground(Color.black);
-            }else{
+                btnSimpan.setBackground(Color.blue);
+            } else {
                 btnSimpan.setEnabled(true);
                 btnSimpan.setForeground(Color.black);
-                btnSimpan.setBackground(new Color(0,204,0));
+                btnSimpan.setBackground(Color.YELLOW);
             }
         }
     } catch (Exception e) {
-        System.out.println(e);
+        e.printStackTrace();
     }
 }
-
     
     public void resetForm(){
         tNo_Transaki.setText(""); 
@@ -778,10 +794,17 @@ private void tabelSiswa() {
     // Fungsi untuk mendapatkan kekurangan (belum dibayarkan) untuk bulan tertentu
 private double getKekurangan(String nisn, String bulan) {
     try {
-        String query = "SELECT (nominal - SUM(jumlah_bayar)) as kekurangan FROM spp " +
+        String query = "SELECT (spp.nominal - COALESCE(SUM(pembayaran.jumlah_bayar), 0)) as kekurangan " +
+                       "FROM spp " +
                        "LEFT JOIN pembayaran ON spp.id_spp = pembayaran.id_spp " +
-                       "WHERE pembayaran.nisn = '" + nisn + "' AND pembayaran.bulan_dibayar = '" + bulan + "'";
-        ResultSet result = con.createStatement().executeQuery(query);
+                       "WHERE pembayaran.nisn = ? AND pembayaran.bulan_dibayar = ? " +
+                       "GROUP BY spp.id_spp";
+
+        PreparedStatement statement = con.prepareStatement(query);
+        statement.setString(1, nisn);
+        statement.setString(2, bulan);
+
+        ResultSet result = statement.executeQuery();
 
         if (result.next()) {
             return result.getDouble("kekurangan");
@@ -789,15 +812,20 @@ private double getKekurangan(String nisn, String bulan) {
     } catch (SQLException ex) {
         ex.printStackTrace();
     }
-    return 0; // Jika ada kesalahan, kembalikan 0 (atau nilai default yang sesuai).
+    return 0;
 }
 
-// Fungsi untuk mendapatkan jumlah pembayaran sebelumnya
 private double getJumlahBayarSebelumnya(String nisn, String bulan) {
     try {
-        String query = "SELECT SUM(jumlah_bayar) as jumlah_bayar FROM pembayaran " +
-                       "WHERE nisn = '" + nisn + "' AND bulan_dibayar = '" + bulan + "'";
-        ResultSet result = con.createStatement().executeQuery(query);
+        String query = "SELECT COALESCE(SUM(jumlah_bayar), 0) as jumlah_bayar " +
+                       "FROM pembayaran " +
+                       "WHERE nisn = ? AND bulan_dibayar = ?";
+
+        PreparedStatement statement = con.prepareStatement(query);
+        statement.setString(1, nisn);
+        statement.setString(2, bulan);
+
+        ResultSet result = statement.executeQuery();
 
         if (result.next()) {
             return result.getDouble("jumlah_bayar");
@@ -805,8 +833,9 @@ private double getJumlahBayarSebelumnya(String nisn, String bulan) {
     } catch (SQLException ex) {
         ex.printStackTrace();
     }
-    return 0; // Jika ada kesalahan, kembalikan 0 (atau nilai default yang sesuai).
+    return 0;
 }
+
 
     /////kode otomatis
     private void ID_AUTO(){
