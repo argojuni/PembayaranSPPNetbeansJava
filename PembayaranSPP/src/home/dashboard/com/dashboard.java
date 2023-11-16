@@ -906,7 +906,7 @@ try {
             try {
                 Map<String, Object> parameter = new HashMap<String, Object>();
                 
-                File rpt = new File("src/laporan/report_trans.jrxml");
+                File rpt = new File("src/laporan/Lap_Trans.jrxml");
                 JasperDesign jasDesign = JRXmlLoader.load(rpt);
                 parameter.clear();
                 JasperReport jasReport = JasperCompileManager.compileReport(jasDesign);
